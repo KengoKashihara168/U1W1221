@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private float TimeLimit = 0.0f;
-    [SerializeField] private ShojiSample shoji = null;
+    [SerializeField] private ShojiController shojiController = null;
     [SerializeField] private Text resultText = null;
     [SerializeField] private Text timeText = null;
 
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         Debug.Log("GameManager:Initialize");
-        shoji.Initialize();
+        shojiController.Initialize();
         resultText.text = "";
         timeText.text = (TimeLimit - time).ToString();
         isStop = true;
@@ -34,19 +34,18 @@ public class GameManager : MonoBehaviour
     {
         if(!isStop)
         {
-            if (!shoji.isAllBreak)
+            if (shojiController.GetRemaindShoji() > 0)
             {
                 if (time <= TimeLimit)
                 {
                     time += Time.deltaTime;
-                    shoji.UpdateShoji();
                     timeText.text = (TimeLimit - time).ToString();
                 }
                 else
                 {
                     Debug.Log("GameManager:time = " + time);
-                    Debug.Log("GameManager:残り障子枚数 = " + shoji.GetRemaindShoji());
-                    resultText.text = "残り障子枚数 = " + shoji.GetRemaindShoji();
+                    Debug.Log("GameManager:残り障子枚数 = " + shojiController.GetRemaindShoji());
+                    resultText.text = "残り障子枚数 = " + shojiController.GetRemaindShoji();
                     isStop = true;
                 }
             }
