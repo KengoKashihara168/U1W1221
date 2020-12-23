@@ -34,35 +34,70 @@ public class GameManager : MonoBehaviour
     {
         if(!isStop)
         {
-            if (shojiController.GetRemaindShoji() > 0)
+            var remaindShojis = shojiController.GetRemaindShoji();
+            if (time <= TimeLimit)
             {
-                if (time <= TimeLimit)
-                {
-                    time += Time.deltaTime;
-                    timeText.text = (TimeLimit - time).ToString();
-                }
-                else
-                {
-                    Debug.Log("GameManager:time = " + time);
-                    Debug.Log("GameManager:残り障子枚数 = " + shojiController.GetRemaindShoji());
-                    resultText.text = "残り障子枚数 = " + shojiController.GetRemaindShoji();
-                    shojiController.SetAllShojiEnabled(false);
-                    isStop = true;
-                }
+                CheckRemaindShojis(remaindShojis);
             }
             else
             {
-                Debug.Log("GameManager:クリアタイム = " + time);
-                resultText.text = "クリアタイム = " + time;
-                isStop = true;
+                TimeOver(remaindShojis);
             }
         }
     }
 
     public void OnClickByStart()
     {
+        if (!isStop) return;
         Initialize();
         shojiController.SetAllShojiEnabled(true);
         isStop = false;
+    }
+
+    /// <summary>
+    /// 障子の残り枚数確認
+    /// </summary>
+    /// <param name="remaind">障子の残り枚数</param>
+    private void CheckRemaindShojis(int remaind)
+    {
+        if (remaind == 0)
+        {
+            GameClear();
+        }
+        else
+        {
+            CountTime();
+        }
+    }
+
+    /// <summary>
+    /// 時間経過
+    /// </summary>
+    private void CountTime()
+    {
+        time += Time.deltaTime;
+        timeText.text = (TimeLimit - time).ToString();
+    }
+
+    /// <summary>
+    /// 時間切れ
+    /// </summary>
+    /// <param name="remaind">残った障子枚数</param>
+    private void TimeOver(int remaind)
+    {
+        time += 1.0f * remaind;
+        isStop = true;
+        // シーン遷移
+        Debug.Log("GameManager:シーン遷移");
+    }
+
+    /// <summary>
+    /// ゲームクリア
+    /// </summary>
+    private void GameClear()
+    {
+        Debug.Log("GameManager:クリアタイム = " + time);
+        resultText.text = "クリアタイム = " + time;
+        isStop = true;
     }
 }
