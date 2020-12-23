@@ -27,7 +27,7 @@ public class Shoji : MonoBehaviour
     private void InitializeButton()
     {
         button = GetComponent<Button>();
-        button.enabled = true;
+        button.enabled = false;
         button.onClick.AddListener(OnClickShoji);
     }
 
@@ -67,6 +67,7 @@ public class Shoji : MonoBehaviour
         if (breakCount <= 0)
         {
             text.text = "破れた";
+            SetShojiEnabled(false);
             isBreak = true;
         }
     }
@@ -80,5 +81,9 @@ public class Shoji : MonoBehaviour
         return isBreak;
     }
 
+    public void SetShojiEnabled(bool enabled)
+    {
+        button.enabled = enabled;
+    }
 
 }

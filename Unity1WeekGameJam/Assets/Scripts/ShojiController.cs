@@ -23,6 +23,18 @@ public class ShojiController : MonoBehaviour
     }
 
     /// <summary>
+    /// 全障子の有効を切り替える
+    /// </summary>
+    /// <param name="enabled">true:有効 / false:無効</param>
+    public void SetAllShojiEnabled(bool enabled)
+    {
+        foreach (var shoji in shojis)
+        {
+            shoji.SetShojiEnabled(enabled);
+        }
+    }
+
+    /// <summary>
     /// 残り障子枚数の取得
     /// </summary>
     /// <returns></returns>

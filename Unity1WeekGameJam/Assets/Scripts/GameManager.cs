@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("GameManager:time = " + time);
                     Debug.Log("GameManager:残り障子枚数 = " + shojiController.GetRemaindShoji());
                     resultText.text = "残り障子枚数 = " + shojiController.GetRemaindShoji();
+                    shojiController.SetAllShojiEnabled(false);
                     isStop = true;
                 }
             }
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
     public void OnClickByStart()
     {
         Initialize();
+        shojiController.SetAllShojiEnabled(true);
         isStop = false;
     }
 }
