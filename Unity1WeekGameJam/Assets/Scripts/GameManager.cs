@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     private void TimeOver(int remaind)
     {
         time += 1.0f * remaind;
+        shojiController.SetAllShojiEnabled(false);
         isStop = true;
         // シーン遷移
         Debug.Log("GameManager:シーン遷移");

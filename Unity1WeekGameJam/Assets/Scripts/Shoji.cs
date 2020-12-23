@@ -81,7 +81,11 @@ public class Shoji : MonoBehaviour
         return isBreak;
     }
 
-    public void SetShojiEnabled(bool enabled)
+    /// <summary>
+    /// 障子の有効設定
+    /// </summary>
+    /// <param name="enabled">true:有効 / false:無効</param>
+    public virtual void SetShojiEnabled(bool enabled)
     {
         button.enabled = enabled;
     }
