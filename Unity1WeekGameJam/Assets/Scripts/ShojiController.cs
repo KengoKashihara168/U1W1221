@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ShojiController : MonoBehaviour
 {
-    [SerializeField] private Transform row = null;
+    [SerializeField] private RectTransform frame = null;
 
+    private ShojiGenerater shojiGenerater = null;
     private List<Shoji> shojis = null;
 
     /// <summary>
@@ -14,8 +15,14 @@ public class ShojiController : MonoBehaviour
     public void Initialize()
     {
         Debug.Log("ShojiController:Initialize");
+        // 障子ジェネレータの初期化
+        shojiGenerater = GetComponent<ShojiGenerater>();
+        shojiGenerater.Initialize();
+        // 障子の生成
         shojis = new List<Shoji>();
-        SetShojis();
+        ShojiComposition comp = new ShojiComposition(12,4,4);
+        shojis = shojiGenerater.GenerateShoji(frame, comp);
+        // 障子の初期化
         foreach (var shoji in shojis)
         {
             shoji.Initialize();
@@ -48,21 +55,5 @@ public class ShojiController : MonoBehaviour
 
         Debug.Log("ShojiController:remaind = " + remaind);
         return remaind;
-    }
-
-    /// <summary>
-    /// 障子配列の設定
-    /// </summary>
-    private void SetShojis()
-    {
-        for(var i = 0;i < row.childCount;i++)
-        {
-            var column = row.GetChild(i);
-            for(var j = 0;j < column.childCount;j++)
-            {
-                var shoji = column.GetChild(j);
-                shojis.Add(shoji.GetComponent<Shoji>());
-            }
-        }
     }
 }
