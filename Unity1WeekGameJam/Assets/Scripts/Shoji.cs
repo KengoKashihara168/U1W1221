@@ -40,7 +40,7 @@ public class Shoji : MonoBehaviour
         if(child.gameObject.name == "Text")
         {
             text = child.GetComponent<Text>();
-            text.text = "障子";
+            text.text = "しょうじ";
         }
         else
         {
@@ -66,7 +66,7 @@ public class Shoji : MonoBehaviour
         breakCount--;
         if (breakCount <= 0)
         {
-            text.text = "破れた";
+            text.text = "やぶれた";
             SetShojiEnabled(false);
             isBreak = true;
         }
