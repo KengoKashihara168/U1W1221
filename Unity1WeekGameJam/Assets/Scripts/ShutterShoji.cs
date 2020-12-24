@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SutterShoji : Shoji
+public class ShutterShoji : Shoji
 {
     private Animator animator;
 
