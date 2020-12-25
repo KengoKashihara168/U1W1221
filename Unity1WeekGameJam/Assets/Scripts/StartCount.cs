@@ -55,6 +55,7 @@ public class StartCount : MonoBehaviour
     /// </summary>
     private void SetText()
     {
-        startText.text = startTime.ToString();
+        int time = Mathf.CeilToInt(startTime);
+        startText.text = time.ToString();
     }
 }

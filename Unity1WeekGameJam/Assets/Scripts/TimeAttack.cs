@@ -79,14 +79,7 @@ public class TimeAttack : MonoBehaviour
     /// </summary>
     private void SetText()
     {
-        float t = timeLimit - time;
-        if(t < 0)
-        {
-            timeText.text = "0";
-        }
-        else
-        {
-            timeText.text = t.ToString();
-        }
+        int t = Mathf.CeilToInt(timeLimit - time);
+        timeText.text = t.ToString();
     }
 }
