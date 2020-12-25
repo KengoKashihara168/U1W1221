@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float TimeLimit = 0.0f;
     [SerializeField] private ShojiController shojiController = null;
     [SerializeField] private Text resultText = null;
-    [SerializeField] private Text timeText = null;
 
     private StartCount startCount = null;
-    private float time = 0.0f;
+    private TimeAttack timeAttack = null;
     private bool isStop = false;
 
     // Start is called before the first frame update
@@ -25,37 +23,26 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager:Initialize");
         shojiController.Initialize();
         resultText.text = "";
-        timeText.text = (TimeLimit - time).ToString();
         startCount = GetComponent<StartCount>();
         startCount.Initialize();
-        time = 0.0f;
+        timeAttack = GetComponent<TimeAttack>();
         isStop = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!startCount.startFlag)
-        {
-            startCount.UpdateTime();
-        }
-        else
-        {
-            isStop = false;
-        }
+        // 開始前のカウントダウンを更新
+        startCount.UpdateTime();
+        if (startCount.startFlag) StartGame();
 
-        if(!isStop)
-        {
-            var remaindShojis = shojiController.GetRemaindShoji();
-            if (time <= TimeLimit)
-            {
-                CheckRemaindShojis(remaindShojis);
-            }
-            else
-            {
-                TimeOver(remaindShojis);
-            }
-        }
+        // 障子の残り枚数を取得
+        var remaindShojis = shojiController.GetRemaindShoji();
+        if (remaindShojis == 0) GameClear();
+
+        // 経過時間の更新
+        timeAttack.UpdateTimeAttack();
+        if (timeAttack.IsTimeUp()) TimeOver(remaindShojis);
     }
 
     public void OnClickByStart()
@@ -67,28 +54,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 障子の残り枚数確認
+    /// ゲーム開始
     /// </summary>
-    /// <param name="remaind">障子の残り枚数</param>
-    private void CheckRemaindShojis(int remaind)
+    private void StartGame()
     {
-        if (remaind == 0)
-        {
-            GameClear();
-        }
-        else
-        {
-            CountTime();
-        }
-    }
-
-    /// <summary>
-    /// 時間経過
-    /// </summary>
-    private void CountTime()
-    {
-        time += Time.deltaTime;
-        timeText.text = (TimeLimit - time).ToString();
+        Debug.Log("GameManager:start game");
+        isStop = false;
+        startCount.StartGame();
+        timeAttack.StartTime();
+        shojiController.SetAllShojiEnabled(true);
     }
 
     /// <summary>
@@ -97,7 +71,6 @@ public class GameManager : MonoBehaviour
     /// <param name="remaind">残った障子枚数</param>
     private void TimeOver(int remaind)
     {
-        time += 1.0f * remaind;
         resultText.text = "のこり = " + remaind;
         shojiController.SetAllShojiEnabled(false);
         isStop = true;
@@ -110,6 +83,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GameClear()
     {
+        float time = timeAttack.StopTime();
         Debug.Log("GameManager:クリアタイム = " + time);
         resultText.text = "クリアタイム = " + time;
         isStop = true;

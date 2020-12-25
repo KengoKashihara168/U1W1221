@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartCount : MonoBehaviour
 {
     public bool startFlag { get; private set; }      // 開始フラグ
 
     [SerializeField] private float startTime = 0.0f; // 開始時間
+    [SerializeField] private Text startText = null;  // 開始時間テキスト
 
-    private float timeCount = 0.0f;                  // 経過時間
-
-    private bool isStart = false;
+    private bool isStart = false;                    // 開始フラグ
 
     /// <summary>
     /// 初期化
@@ -18,9 +18,9 @@ public class StartCount : MonoBehaviour
     public void Initialize()
     {
         Debug.Log("StartCount:Initialize");
-        timeCount = 0.0f;
         startFlag = false;
         isStart = false;
+        SetText();
     }
 
     /// <summary>
@@ -30,12 +30,12 @@ public class StartCount : MonoBehaviour
     {
         if (startFlag) return;
         if (isStart)   return;
-        Debug.Log("StartCount:time = " + timeCount);
-        timeCount += Time.deltaTime;
 
-        if(timeCount >= startTime)
+        startTime -= Time.deltaTime;
+        SetText();
+
+        if (startTime <= 0.0f)
         {
-            Debug.Log("StartCount:start");
             startFlag = true;
         }
     }
@@ -48,5 +48,13 @@ public class StartCount : MonoBehaviour
         Debug.Log("StartCount:Game Start");
         isStart = true;
         startFlag = false;
+    }
+
+    /// <summary>
+    /// テキストの設定
+    /// </summary>
+    private void SetText()
+    {
+        startText.text = startTime.ToString();
     }
 }
