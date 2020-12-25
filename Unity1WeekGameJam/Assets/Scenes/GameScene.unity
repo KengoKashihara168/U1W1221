@@ -985,7 +985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5141043cd6062fc4c8e30fbc1c412462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLimit: 25
+  timeLimit: 5
   timeText: {fileID: 462444754}
 --- !u!1001 &1685698685414826187
 PrefabInstance:
