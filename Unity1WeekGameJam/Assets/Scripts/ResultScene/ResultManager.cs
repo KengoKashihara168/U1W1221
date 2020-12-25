@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ResultManager : MonoBehaviour
 {
+    [SerializeField] private float sceneTime = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("ResultManager:hello world");
+        SceneChange.ChangeScene(this, SceneType.TitleScene, sceneTime);
     }
 
     // Update is called once per frame
