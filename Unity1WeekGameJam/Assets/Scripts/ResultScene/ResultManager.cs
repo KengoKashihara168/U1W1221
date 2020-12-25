@@ -9,12 +9,28 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SceneChange.ChangeScene(this, SceneType.TitleScene, sceneTime);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    /// <summary>
+    /// タイトルシーン遷移ボタン用イベントハンドラー
+    /// </summary>
+    public void OnChangeTitleScene()
+    {
+        SceneChange.ChangeScene(this, SceneType.TitleScene, sceneTime);
+    }
+
+    /// <summary>
+    /// ゲームシーン遷移ボタン用イベントハンドラー
+    /// </summary>
+    public void OnChangeGameScene()
+    {
+        SceneChange.ChangeScene(this, SceneType.GameScene, sceneTime);
     }
 }
