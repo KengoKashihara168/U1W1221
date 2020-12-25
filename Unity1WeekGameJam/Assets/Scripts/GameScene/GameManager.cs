@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         shojiController.SetAllShojiEnabled(false);
         isStop = true;
         // シーン遷移
-        Debug.Log("GameManager:シーン遷移");
+        SceneChange.ChangeScene(this, SceneType.ResultScene, 1.0f);
     }
 
     /// <summary>
