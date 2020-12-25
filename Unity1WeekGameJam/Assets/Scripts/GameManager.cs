@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text resultText = null;
     [SerializeField] private Text timeText = null;
 
+    private StartCount startCount = null;
     private float time = 0.0f;
     private bool isStop = false;
 
@@ -25,13 +26,24 @@ public class GameManager : MonoBehaviour
         shojiController.Initialize();
         resultText.text = "";
         timeText.text = (TimeLimit - time).ToString();
-        isStop = true;
+        startCount = GetComponent<StartCount>();
+        startCount.Initialize();
         time = 0.0f;
+        isStop = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!startCount.startFlag)
+        {
+            startCount.UpdateTime();
+        }
+        else
+        {
+            isStop = false;
+        }
+
         if(!isStop)
         {
             var remaindShojis = shojiController.GetRemaindShoji();
