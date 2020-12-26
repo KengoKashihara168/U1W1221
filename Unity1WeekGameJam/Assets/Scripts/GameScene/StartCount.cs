@@ -48,6 +48,7 @@ public class StartCount : MonoBehaviour
         Debug.Log("StartCount:Game Start");
         isStart = true;
         startFlag = false;
+        startText.text = "";
     }
 
     /// <summary>

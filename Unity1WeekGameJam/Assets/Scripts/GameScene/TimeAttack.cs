@@ -16,7 +16,7 @@ public class TimeAttack : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        SetText();
+        timeText.text = "";
     }
 
     /// <summary>
@@ -39,6 +39,7 @@ public class TimeAttack : MonoBehaviour
         Debug.Log("TimeAttack:game start");
         isStop = false;
         time = 0.0f;
+        SetText();
     }
 
     /// <summary>

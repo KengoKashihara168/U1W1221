@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         startCount = GetComponent<StartCount>();
         startCount.Initialize();
         timeAttack = GetComponent<TimeAttack>();
+        timeAttack.Initialize();
         isStop = true;
     }
 
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
         shojiController.SetAllShojiEnabled(false);
         isStop = true;
         // シーン遷移
-        SceneChange.ChangeScene(this, SceneType.ResultScene, 1.0f);
+        SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);
     }
 
     /// <summary>
@@ -87,5 +88,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager:クリアタイム = " + time);
         resultText.text = "クリアタイム = " + time;
         isStop = true;
+        // シーン遷移
+        SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);
     }
 }
