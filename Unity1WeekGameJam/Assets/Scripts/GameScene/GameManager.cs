@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         if (startCount.startFlag) StartGame();
 
         // 障子の残り枚数を取得
-        var remaindShojis = shojiController.GetRemaindShoji();
+        var remaindShojis = shojiController.GetRemaindShojis();
         if (remaindShojis == 0) GameClear();
 
         // 経過時間の更新
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isStop) return;
         Initialize();
-        shojiController.SetAllShojiEnabled(true);
+        shojiController.SetAllShojisEnabled(true);
         isStop = false;
     }
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         isStop = false;
         startCount.StartGame();
         timeAttack.StartTime();
-        shojiController.SetAllShojiEnabled(true);
+        shojiController.SetAllShojisEnabled(true);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     private void TimeOver(int remaind)
     {
         resultText.text = "のこり = " + remaind;
-        shojiController.SetAllShojiEnabled(false);
+        shojiController.SetAllShojisEnabled(false);
         isStop = true;
         // シーン遷移
         SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);

@@ -11,12 +11,12 @@ public struct RandomRange
 
 public class ShojiController : MonoBehaviour
 {
-    [SerializeField] private RectTransform  frame        = null;
+    [SerializeField] private ShojiFrame[]   frames        = null;
     [SerializeField] private RandomRange    strongRange  = new RandomRange();
     [SerializeField] private RandomRange    shutterRange = new RandomRange();
 
     private ShojiGenerater  shojiGenerater = null;
-    private List<Shoji>     shojis         = null;
+    //private List<Shoji>     shojis         = null;
 
     /// <summary>
     /// 初期化
@@ -28,27 +28,33 @@ public class ShojiController : MonoBehaviour
         shojiGenerater = GetComponent<ShojiGenerater>();
         shojiGenerater.Initialize();
         // 障子の生成
-        shojis = new List<Shoji>();
-        ShojiComposition comp = GetComposition(strongRange, shutterRange);
-        shojis.AddRange(shojiGenerater.GenerateShoji(frame, comp));
-
-        GetComposition(strongRange, shutterRange);
-        // 障子の初期化
-        foreach (var shoji in shojis)
+        //shojis = new List<Shoji>();
+        for(var i = 0;i < frames.Length;i++)
         {
-            shoji.Initialize();
+            ShojiComposition comp = GetComposition(strongRange, shutterRange);
+            frames[i].SetShojis(shojiGenerater.GenerateShoji(frames[i], comp));
         }
+        
+        
+        //shojis.AddRange(shojiGenerater.GenerateShoji(frames, comp));
+
+        //GetComposition(strongRange, shutterRange);
+        //// 障子の初期化
+        //foreach (var shoji in shojis)
+        //{
+        //    shoji.Initialize();
+        //}
     }
 
     /// <summary>
     /// 全障子の有効を切り替える
     /// </summary>
     /// <param name="enabled">true:有効 / false:無効</param>
-    public void SetAllShojiEnabled(bool enabled)
+    public void SetAllShojisEnabled(bool enabled)
     {
-        foreach (var shoji in shojis)
+        foreach (var frame in frames)
         {
-            shoji.SetShojiEnabled(enabled);
+            frame.SetFrameEnabled(enabled);
         }
     }
 
@@ -56,15 +62,13 @@ public class ShojiController : MonoBehaviour
     /// 残り障子枚数の取得
     /// </summary>
     /// <returns></returns>
-    public int GetRemaindShoji()
+    public int GetRemaindShojis()
     {
         int remaind = 0;
-        foreach (var shoji in shojis)
+        foreach (var frame in frames)
         {
-            if (!shoji.IsBreak()) remaind++;
+            remaind += frame.GetRemaindShoji();
         }
-
-        Debug.Log("ShojiController:remaind = " + remaind);
         return remaind;
     }
 

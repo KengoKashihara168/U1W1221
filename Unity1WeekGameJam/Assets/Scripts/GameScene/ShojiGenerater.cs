@@ -50,9 +50,10 @@ public class ShojiGenerater : MonoBehaviour
     /// <param name="rect">障子の親</param>
     /// <param name="comp">障子の構成</param>
     /// <returns>障子リスト</returns>
-    public List<Shoji> GenerateShoji(RectTransform rect,ShojiComposition comp)
+    public List<Shoji> GenerateShoji(ShojiFrame frame,ShojiComposition comp)
     {
         var shojis = new List<Shoji>();
+        RectTransform rect = frame.GetComponent<RectTransform>();
         shojis.AddRange(InstantiateShoji(normalPrefab, rect, comp.normal));
         shojis.AddRange(InstantiateShoji(strongPrefab, rect, comp.strong));
         shojis.AddRange(InstantiateShoji(shutterPrefab, rect, comp.shutter));
@@ -102,7 +103,7 @@ public class ShojiGenerater : MonoBehaviour
     private void SetShojisPosition(List<Shoji> shojis)
     {
         int length = shojis.Count;
-        var posList = positionList;
+        var posList = new List<Vector3>(positionList);
         for(var i = 0;i < shojis.Count;i++)
         {
             int rand = Random.Range(0, length);
