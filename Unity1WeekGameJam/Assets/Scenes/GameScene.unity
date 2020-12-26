@@ -330,6 +330,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame: {fileID: 811620614}
+  strongRange:
+    min: 2
+    max: 4
+  shutterRange:
+    min: 1
+    max: 3
 --- !u!4 &141592860
 Transform:
   m_ObjectHideFlags: 0

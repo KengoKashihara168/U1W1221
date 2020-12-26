@@ -24,8 +24,8 @@ public struct ShojiComposition
 
 public class ShojiGenerater : MonoBehaviour
 {
-    private readonly int ShojiHeight = 5; // 障子の高さ
-    private readonly int ShojiWidth = 4; // 障子の幅
+    public readonly int ShojiHeight = 5; // 障子の高さ
+    public readonly int ShojiWidth = 4; // 障子の幅
     private readonly float StartPosX = -135.0f; // 開始するX座標
     private readonly float StartPosY = -180.0f; // 開始するY座標
 
