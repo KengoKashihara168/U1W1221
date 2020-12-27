@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private ShojiController shojiController = null;
-    [SerializeField] private Text resultText = null;
+    [SerializeField] private Text            resultText      = null;
 
     private StartCount startCount = null;
     private TimeAttack timeAttack = null;
-    private static int shojiRemaind = 0;
-    private bool isStop = false;
+    private bool       isStop     = false;
+
+    // リザルト用変数
+    public static int shojiRemaind { get; private set; } // 障子の残り枚数
+    public static float finishTime { get; private set; } // 終了時間
 
     // Start is called before the first frame update
     void Start()
@@ -19,17 +22,24 @@ public class GameManager : MonoBehaviour
         Initialize();
     }
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     private void Initialize()
     {
         Debug.Log("GameManager:Initialize");
-        shojiController.Initialize();
+        // メンバ変数の初期化
+        startCount      = GetComponent<StartCount>();
+        timeAttack      = GetComponent<TimeAttack>();
         resultText.text = "";
-        startCount = GetComponent<StartCount>();
+        shojiRemaind    = 0;
+        isStop          = true;
+
+        // オブジェクトの初期化
+        shojiController.Initialize();  
         startCount.Initialize();
-        timeAttack = GetComponent<TimeAttack>();
         timeAttack.Initialize();
-        shojiRemaind = 0;
-        isStop = true;
+
     }
 
     // Update is called once per frame
@@ -76,6 +86,7 @@ public class GameManager : MonoBehaviour
     {
         if (isStop) return;
         timeAttack.UpdateTimeAttack();
+        finishTime = timeAttack.GetTime();
         if (timeAttack.IsTimeUp()) TimeOver();
     }
 
@@ -97,9 +108,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GameClear()
     {
-        float time = timeAttack.StopTime();
-        Debug.Log("GameManager:クリアタイム = " + time);
-        resultText.text = "クリアタイム = " + time;
+        
+        Debug.Log("GameManager:クリアタイム = " + finishTime);
+        resultText.text = "クリアタイム = " + finishTime;
         isStop = true;
         // シーン遷移
         SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);
