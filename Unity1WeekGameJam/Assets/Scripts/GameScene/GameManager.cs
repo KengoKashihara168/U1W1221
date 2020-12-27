@@ -8,9 +8,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ShojiController shojiController = null;
     [SerializeField] private Text            resultText      = null;
 
-    private StartCount startCount = null;
-    private TimeAttack timeAttack = null;
-    private bool       isStop     = false;
+    private StartCount  startCount = null;
+    private TimeAttack  timeAttack = null;
+    private bool        isStop     = false;
+    private AudioSource audio      = null;
 
     // リザルト用変数
     public static int   shojiRemaind { get; private set; } // 障子の残り枚数
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         resultText.text = "";
         shojiRemaind    = 0;
         isStop          = true;
+        audio           = GetComponent<AudioSource>();
 
         // オブジェクトの初期化
         shojiController.Initialize();  
@@ -66,6 +68,7 @@ public class GameManager : MonoBehaviour
         startCount.StartGame();
         timeAttack.StartTime();
         shojiController.StartGame();
+        audio.Play();
     }
 
     /// <summary>
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
         resultText.text = "のこり = " + shojiRemaind;
         shojiController.EndGame();
         isStop = true;
+        audio.Stop();
         // シーン遷移
         SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);
     }
