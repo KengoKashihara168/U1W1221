@@ -1,10 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShojiFrame : MonoBehaviour
 {
+    private Text remaindText = null;
+
     private List<Shoji> shojis = null;
+
+    public void Initialize()
+    {
+        var child = transform.GetChild(0);
+        if(child.name == "RemaindText")
+        {
+            remaindText = child.GetComponent<Text>();
+        }
+    }
+
 
     /// <summary>
     /// 障子の設定
@@ -28,10 +41,14 @@ public class ShojiFrame : MonoBehaviour
         int remaind = 0;
         foreach (var shoji in shojis)
         {
-            if (!shoji.IsBreak()) remaind++;
+            if (!shoji.IsBreak())
+            {
+                remaind++;
+            }
         }
 
-        Debug.Log("ShojiFrame:remaind = " + remaind);
+        remaindText.text = "のこり" + remaind.ToString() + "まい";
+
         return remaind;
     }
 

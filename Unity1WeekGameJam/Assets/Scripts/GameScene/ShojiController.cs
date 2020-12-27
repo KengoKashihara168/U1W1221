@@ -14,9 +14,11 @@ public class ShojiController : MonoBehaviour
     [SerializeField] private ShojiFrame[]   frames        = null;
     [SerializeField] private RandomRange    strongRange  = new RandomRange();
     [SerializeField] private RandomRange    shutterRange = new RandomRange();
+    [SerializeField] private float waitTime = 0.0f;
 
     private ShojiGenerater  shojiGenerater = null;
-    //private List<Shoji>     shojis         = null;
+    private float waitCount = 0.0f;
+    private int activeFrame = 0;
 
     /// <summary>
     /// 初期化
@@ -28,34 +30,61 @@ public class ShojiController : MonoBehaviour
         shojiGenerater = GetComponent<ShojiGenerater>();
         shojiGenerater.Initialize();
         // 障子の生成
-        //shojis = new List<Shoji>();
-        for(var i = 0;i < frames.Length;i++)
-        {
-            ShojiComposition comp = GetComposition(strongRange, shutterRange);
-            frames[i].SetShojis(shojiGenerater.GenerateShoji(frames[i], comp));
-        }
-        
-        
-        //shojis.AddRange(shojiGenerater.GenerateShoji(frames, comp));
 
-        //GetComposition(strongRange, shutterRange);
-        //// 障子の初期化
-        //foreach (var shoji in shojis)
-        //{
-        //    shoji.Initialize();
-        //}
+        foreach(var frame in frames)
+        {
+            frame.Initialize();
+            ShojiComposition comp = GetComposition(strongRange, shutterRange);
+            frame.SetShojis(shojiGenerater.GenerateShoji(frame, comp));
+        }
+
+        waitCount = 0.0f;
+
+        foreach (var frame in frames)
+        {
+            frame.gameObject.SetActive(false);
+        }
+        activeFrame = 0;
     }
 
     /// <summary>
-    /// 全障子の有効を切り替える
+    /// ゲーム開始
     /// </summary>
-    /// <param name="enabled">true:有効 / false:無効</param>
-    public void SetAllShojisEnabled(bool enabled)
+    public void StartGame()
+    {
+        frames[0].gameObject.SetActive(true);
+        frames[0].SetFrameEnabled(true);
+    }
+
+    /// <summary>
+    /// ゲーム終了
+    /// </summary>
+    public void EndGame()
     {
         foreach (var frame in frames)
         {
-            frame.SetFrameEnabled(enabled);
+            frame.SetFrameEnabled(false);
         }
+    }
+
+    /// <summary>
+    /// 障子が切替か確認
+    /// </summary>
+    public void CheckChangeShoji()
+    {
+        if (activeFrame >= frames.Length - 1) return;
+        if (frames[activeFrame].GetRemaindShoji() != 0) return;
+
+        if(waitCount >= waitTime)
+        {
+            ChangeShoji();
+            waitCount = 0.0f;
+        }
+        else
+        {
+            waitCount += Time.deltaTime;
+        }
+
     }
 
     /// <summary>
@@ -64,12 +93,13 @@ public class ShojiController : MonoBehaviour
     /// <returns></returns>
     public int GetRemaindShojis()
     {
-        int remaind = 0;
-        foreach (var frame in frames)
+        int total = 0;
+        for(var i = 0;i < frames.Length;i++)
         {
-            remaind += frame.GetRemaindShoji();
+            int remaind = frames[i].GetRemaindShoji();
+            total += remaind;
         }
-        return remaind;
+        return total;
     }
 
     /// <summary>
@@ -89,5 +119,16 @@ public class ShojiController : MonoBehaviour
         Debug.Log("ShojiController:comp (normal,strong,shutter) = (" + comp.normal + "," + comp.strong + "," + comp.shutter + ")");
 
         return comp;
+    }
+
+    /// <summary>
+    /// 障子の切り替え
+    /// </summary>
+    private void ChangeShoji()
+    {
+        frames[activeFrame].gameObject.SetActive(false);
+        activeFrame++;
+        frames[activeFrame].gameObject.SetActive(true);
+        frames[activeFrame].SetFrameEnabled(true);
     }
 }
