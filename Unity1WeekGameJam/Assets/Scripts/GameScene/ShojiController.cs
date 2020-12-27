@@ -33,6 +33,7 @@ public class ShojiController : MonoBehaviour
 
         foreach(var frame in frames)
         {
+            frame.Initialize();
             ShojiComposition comp = GetComposition(strongRange, shutterRange);
             frame.SetShojis(shojiGenerater.GenerateShoji(frame, comp));
         }
