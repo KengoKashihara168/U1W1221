@@ -9,14 +9,13 @@ public class TimeAttack : MonoBehaviour
     [SerializeField] private Text timeText = null;
 
     private float time = 0.0f;
-    private bool isStop = true;
 
     /// <summary>
     /// 初期化
     /// </summary>
     public void Initialize()
     {
-        SetText();
+        timeText.text = "";
     }
 
     /// <summary>
@@ -24,7 +23,6 @@ public class TimeAttack : MonoBehaviour
     /// </summary>
     public void UpdateTimeAttack()
     {
-        if (isStop) return;
         // 時間経過
         CountTime();
         // テキストの更新
@@ -37,8 +35,8 @@ public class TimeAttack : MonoBehaviour
     public void StartTime()
     {
         Debug.Log("TimeAttack:game start");
-        isStop = false;
         time = 0.0f;
+        SetText();
     }
 
     /// <summary>
@@ -47,7 +45,6 @@ public class TimeAttack : MonoBehaviour
     /// <returns>経過時間</returns>
     public float StopTime()
     {
-        isStop = true;
         return time;
     }
 
@@ -70,7 +67,6 @@ public class TimeAttack : MonoBehaviour
         if (time > timeLimit)
         {
             Debug.Log("TimeAttack:Time Over");
-            isStop = true;
         }
     }
 
