@@ -7,7 +7,6 @@ public class StrongShoji : Shoji
     public override void Initialize()
     {
         base.Initialize();
-        text.text = "ダンボール";
         breakCount = 3;
     }
 }
