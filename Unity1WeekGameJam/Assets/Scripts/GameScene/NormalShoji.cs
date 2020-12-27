@@ -10,6 +10,5 @@ public class NormalShoji : Shoji
     public override void Initialize()
     {
         base.Initialize();
-        text.text = "和紙";
     }
 }

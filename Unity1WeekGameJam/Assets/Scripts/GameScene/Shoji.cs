@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class Shoji : MonoBehaviour
 {
+    [SerializeField] protected Sprite breakSprite = null;
     protected Button button;
-    protected Text text;
     protected int breakCount;
+    private Image image;
     private bool isBreak;
 
     /// <summary>
@@ -16,8 +17,8 @@ public class Shoji : MonoBehaviour
     public virtual void Initialize()
     {
         InitializeButton();
-        InitializeText();
         breakCount = 1;
+        image = GetComponent<Image>();
         isBreak = false;
     }
 
@@ -29,24 +30,6 @@ public class Shoji : MonoBehaviour
         button = GetComponent<Button>();
         button.enabled = false;
         button.onClick.AddListener(OnClickShoji);
-    }
-
-    /// <summary>
-    /// テキストの初期化
-    /// </summary>
-    private void InitializeText()
-    {
-        var child = transform.GetChild(0);
-        if(child.gameObject.name == "Text")
-        {
-            text = child.GetComponent<Text>();
-            text.text = "しょうじ";
-        }
-        else
-        {
-            text = null;
-            Debug.LogError("ボタンのテキストが見つかりませんでした");
-        }
     }
 
     /// <summary>
@@ -66,7 +49,7 @@ public class Shoji : MonoBehaviour
         breakCount--;
         if (breakCount <= 0)
         {
-            text.text = "やぶれた";
+            image.sprite = breakSprite;
             SetShojiEnabled(false);
             isBreak = true;
         }

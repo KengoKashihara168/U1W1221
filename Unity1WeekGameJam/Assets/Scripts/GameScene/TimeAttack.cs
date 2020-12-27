@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class TimeAttack : MonoBehaviour
 {
     [SerializeField] private float timeLimit = 0.0f;
+
     [SerializeField] private Text timeText = null;
 
     private float time = 0.0f;
-    private bool isStop = true;
 
     /// <summary>
     /// 初期化
     /// </summary>
     public void Initialize()
     {
-        SetText();
+        timeText.text = "";
     }
 
     /// <summary>
@@ -24,7 +24,6 @@ public class TimeAttack : MonoBehaviour
     /// </summary>
     public void UpdateTimeAttack()
     {
-        if (isStop) return;
         // 時間経過
         CountTime();
         // テキストの更新
@@ -37,18 +36,18 @@ public class TimeAttack : MonoBehaviour
     public void StartTime()
     {
         Debug.Log("TimeAttack:game start");
-        isStop = false;
         time = 0.0f;
+        SetText();
     }
 
     /// <summary>
-    /// 終了
+    /// 時間の取得
     /// </summary>
-    /// <returns>経過時間</returns>
-    public float StopTime()
+    /// <returns>時間</returns>
+    public float GetTime()
     {
-        isStop = true;
-        return time;
+        float t = timeLimit - time;
+        return t;
     }
 
     /// <summary>
@@ -67,11 +66,6 @@ public class TimeAttack : MonoBehaviour
     private void CountTime()
     {
         time += Time.deltaTime;
-        if (time > timeLimit)
-        {
-            Debug.Log("TimeAttack:Time Over");
-            isStop = true;
-        }
     }
 
     /// <summary>
