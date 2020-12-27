@@ -1423,6 +1423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shojiController: {fileID: 141592859}
   resultText: {fileID: 306309840}
+  changeSceneSecond: 2
 --- !u!4 &1959362209
 Transform:
   m_ObjectHideFlags: 0
@@ -1475,7 +1476,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fa8a117c4a2191747b48b031cf24742d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 87502fcfa7d732f4fb4339fd8523c636, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

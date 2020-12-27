@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private ShojiController shojiController = null;
-    [SerializeField] private Text            resultText      = null;
+    [SerializeField] private ShojiController shojiController   = null;
+    [SerializeField] private Text            resultText        = null;
+    [SerializeField] private float           changeSceneSecond = 0.0f;
 
     private StartCount  startCount = null;
     private TimeAttack  timeAttack = null;
     private bool        isStop     = false;
-    private AudioSource audio      = null;
+    private AudioSource audioSource      = null;
 
     // リザルト用変数
     public static int   shojiRemaind { get; private set; } // 障子の残り枚数
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         resultText.text = "";
         shojiRemaind    = 0;
         isStop          = true;
-        audio           = GetComponent<AudioSource>();
+        audioSource           = GetComponent<AudioSource>();
 
         // オブジェクトの初期化
         shojiController.Initialize();  
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
         startCount.StartGame();
         timeAttack.StartTime();
         shojiController.StartGame();
-        audio.Play();
+        audioSource.Play();
     }
 
     /// <summary>
@@ -102,9 +103,11 @@ public class GameManager : MonoBehaviour
         resultText.text = "のこり = " + shojiRemaind;
         shojiController.EndGame();
         isStop = true;
-        audio.Stop();
+        //audio.Stop();
         // シーン遷移
-        SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);
+        Debug.Log("TimeOver");
+        this.StartCoroutine(FadeOutBGM());
+        SceneChange.ChangeScene(this, SceneType.ResultScene, changeSceneSecond);
     }
 
     /// <summary>
@@ -116,6 +119,23 @@ public class GameManager : MonoBehaviour
         resultText.text = "クリアタイム = " + timeRemaind;
         isStop = true;
         // シーン遷移
-        SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);
+        this.StartCoroutine(FadeOutBGM());
+        SceneChange.ChangeScene(this, SceneType.ResultScene, changeSceneSecond);
+    }
+
+    /// <summary>
+    /// BGMのフェードアウトコルーチン
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator FadeOutBGM()
+    {
+        Debug.Log("FadeOut");
+        float fadeoutCount = 0.0f;
+        while(fadeoutCount <= changeSceneSecond)
+        {
+            fadeoutCount += Time.deltaTime;
+            audioSource.volume -= 1.0f / (changeSceneSecond / Time.deltaTime);
+            yield return null;
+        }
     }
 }
