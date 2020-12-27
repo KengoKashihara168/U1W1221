@@ -12,7 +12,7 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        finishTime = GameManager.finishTime;
+        finishTime = GameManager.timeRemaind;
         remaindCount = GameManager.shojiRemaind;
 
         Debug.Log("ResultManager:finishTime = " + finishTime + ",remaindCount = " + remaindCount);
