@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class Shoji : MonoBehaviour
 {
     [SerializeField] protected Sprite breakSprite = null;
+    [SerializeField] protected AudioClip breakSE = null;
     protected Button button;
     protected int breakCount;
-    private Image image;
-    private bool isBreak;
+    protected bool isBreak;
+    protected AudioSource audioSource;
+    protected Image image;
 
     /// <summary>
     /// 初期化
@@ -20,6 +22,7 @@ public class Shoji : MonoBehaviour
         breakCount = 1;
         image = GetComponent<Image>();
         isBreak = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -52,6 +55,7 @@ public class Shoji : MonoBehaviour
             image.sprite = breakSprite;
             SetShojiEnabled(false);
             isBreak = true;
+            audioSource.PlayOneShot(breakSE);
         }
     }
 

@@ -12,6 +12,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private Text penaltyText = null;
     [SerializeField] private Text scoreText = null;
     [SerializeField] private Button[] buttons = null;
+    [SerializeField] private AudioClip buttonSE = null;
 
     private float timeRemaind = 0.0f;
     private int shojiRemaind = 0;
@@ -21,6 +22,7 @@ public class ResultManager : MonoBehaviour
     private AnimationController penaltyAnimation = null;
     private int score = 0;
     private int scoreCount = 0;
+    private AudioSource sound = null;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,7 @@ public class ResultManager : MonoBehaviour
         {
             button.gameObject.SetActive(false);
         }
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -81,6 +84,7 @@ public class ResultManager : MonoBehaviour
     /// </summary>
     public void OnChangeTitleScene()
     {
+        sound.PlayOneShot(buttonSE);
         SceneChange.ChangeScene(this, SceneType.TitleScene, sceneTime);
     }
 
@@ -89,6 +93,7 @@ public class ResultManager : MonoBehaviour
     /// </summary>
     public void OnChangeGameScene()
     {
+        sound.PlayOneShot(buttonSE);
         SceneChange.ChangeScene(this, SceneType.GameScene, sceneTime);
     }
 
