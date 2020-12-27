@@ -705,6 +705,7 @@ MonoBehaviour:
   buttons:
   - {fileID: 742825413}
   - {fileID: 411619820}
+  buttonSE: {fileID: 8300000, guid: b4d1333f22543c745b97336554dcd117, type: 3}
 --- !u!4 &665456870
 Transform:
   m_ObjectHideFlags: 0
@@ -731,7 +732,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 34e3bb711a83bdc488c1f822a4ecda0d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 1
   Mute: 0
