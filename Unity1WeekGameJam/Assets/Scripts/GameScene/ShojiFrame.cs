@@ -28,10 +28,11 @@ public class ShojiFrame : MonoBehaviour
         int remaind = 0;
         foreach (var shoji in shojis)
         {
-            if (!shoji.IsBreak()) remaind++;
+            if (!shoji.IsBreak())
+            {
+                remaind++;
+            }
         }
-
-        Debug.Log("ShojiFrame:remaind = " + remaind);
         return remaind;
     }
 
