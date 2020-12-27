@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     private bool       isStop     = false;
 
     // リザルト用変数
-    public static int shojiRemaind { get; private set; } // 障子の残り枚数
-    public static float finishTime { get; private set; } // 終了時間
+    public static int   shojiRemaind { get; private set; } // 障子の残り枚数
+    public static float timeRemaind  { get; private set; } // 終了時間
 
     // Start is called before the first frame update
     void Start()
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     {
         if (isStop) return;
         timeAttack.UpdateTimeAttack();
-        finishTime = timeAttack.GetTime();
+        timeRemaind = timeAttack.GetTime();
         if (timeAttack.IsTimeUp()) TimeOver();
     }
 
@@ -108,9 +108,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GameClear()
     {
-        
-        Debug.Log("GameManager:クリアタイム = " + finishTime);
-        resultText.text = "クリアタイム = " + finishTime;
+        Debug.Log("GameManager:クリアタイム = " + timeRemaind);
+        resultText.text = "クリアタイム = " + timeRemaind;
         isStop = true;
         // シーン遷移
         SceneChange.ChangeScene(this, SceneType.ResultScene, 2.0f);

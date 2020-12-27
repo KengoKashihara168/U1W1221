@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TimeAttack : MonoBehaviour
 {
     [SerializeField] private float timeLimit = 0.0f;
+
     [SerializeField] private Text timeText = null;
 
     private float time = 0.0f;
@@ -45,7 +46,8 @@ public class TimeAttack : MonoBehaviour
     /// <returns>時間</returns>
     public float GetTime()
     {
-        return time;
+        float t = timeLimit - time;
+        return t;
     }
 
     /// <summary>
@@ -64,10 +66,6 @@ public class TimeAttack : MonoBehaviour
     private void CountTime()
     {
         time += Time.deltaTime;
-        if (time > timeLimit)
-        {
-            Debug.Log("TimeAttack:Time Over");
-        }
     }
 
     /// <summary>
