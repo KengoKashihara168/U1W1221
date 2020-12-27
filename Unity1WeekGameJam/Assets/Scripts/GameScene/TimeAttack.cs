@@ -40,10 +40,10 @@ public class TimeAttack : MonoBehaviour
     }
 
     /// <summary>
-    /// 終了
+    /// 時間の取得
     /// </summary>
-    /// <returns>経過時間</returns>
-    public float StopTime()
+    /// <returns>時間</returns>
+    public float GetTime()
     {
         return time;
     }
