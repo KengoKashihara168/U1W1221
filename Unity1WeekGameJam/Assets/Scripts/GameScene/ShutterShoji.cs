@@ -12,7 +12,6 @@ public class ShutterShoji : Shoji
     public override void Initialize()
     {
         base.Initialize();
-        text.text = "とじる";
         animator = GetComponent<Animator>();
         animator.speed = 0.0f;
     }
@@ -38,13 +37,11 @@ public class ShutterShoji : Shoji
 
     public void OnShut()
     {
-        text.text = "とじる";
         button.enabled = false;
     }
 
     public void OnOpen()
     {
-        text.text = "ひらく";
         button.enabled = true;
     }
 
