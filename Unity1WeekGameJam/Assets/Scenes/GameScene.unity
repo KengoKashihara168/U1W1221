@@ -1447,7 +1447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5141043cd6062fc4c8e30fbc1c412462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLimit: 50
+  timeLimit: 60
   timeText: {fileID: 462444754}
 --- !u!224 &2137315898 stripped
 RectTransform:
