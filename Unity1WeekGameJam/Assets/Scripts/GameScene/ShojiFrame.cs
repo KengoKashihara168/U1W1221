@@ -47,7 +47,7 @@ public class ShojiFrame : MonoBehaviour
             }
         }
 
-        remaindText.text = "のこり" + remaind.ToString() + "まい";
+        remaindText.text = "残り" + remaind.ToString() + "枚";
 
         return remaind;
     }
