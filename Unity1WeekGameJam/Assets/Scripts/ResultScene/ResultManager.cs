@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    private readonly string gameID = "u1w-shyojikyousou";
+
     [SerializeField] private float sceneTime = 0.0f;
     [SerializeField] private int timeBonus = 0;
     [SerializeField] private int shojiPenalty = 0;
@@ -113,6 +115,23 @@ public class ResultManager : MonoBehaviour
     {
         sound.PlayOneShot(buttonSE);
         SceneChange.ChangeScene(this, SceneType.GameScene, sceneTime);
+    }
+
+    public void OnTweetButton()
+    {
+        string tweet = "";
+
+        if(shojiRemaind > 0)
+        {
+            tweet = "もう少しで家中のショウジに穴をあけられたのに...!\n";
+        }
+        else
+        {
+            tweet = "イエーイ！家中のショウジを穴だらけにしてやったぜ！\n";
+        }
+        tweet += "私のショウジ破り記録はなんと..." + score.ToString() + "点です！";
+
+        naichilab.UnityRoomTweet.Tweet(gameID, tweet, "unityroom", "unity1week", "shoji");
     }
 
     /// <summary>
