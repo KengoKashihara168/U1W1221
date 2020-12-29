@@ -9,10 +9,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text            resultText        = null;
     [SerializeField] private float           changeSceneSecond = 0.0f;
 
-    private StartCount  startCount = null;
-    private TimeAttack  timeAttack = null;
-    private bool        isStop     = false;
-    private AudioSource audioSource      = null;
+    private StartCount  startCount  = null;
+    private TimeAttack  timeAttack  = null;
+    private bool        isStop      = false;
+    private AudioSource audioSource = null;
+    private float       bgmValume   = 0.0f;
 
     // リザルト用変数
     public static int   shojiRemaind { get; private set; } // 障子の残り枚数
@@ -36,7 +37,8 @@ public class GameManager : MonoBehaviour
         resultText.text = "";
         shojiRemaind    = 0;
         isStop          = true;
-        audioSource           = GetComponent<AudioSource>();
+        audioSource     = GetComponent<AudioSource>();
+        bgmValume       = audioSource.volume;
 
         // オブジェクトの初期化
         shojiController.Initialize();  
@@ -134,7 +136,7 @@ public class GameManager : MonoBehaviour
         while(fadeoutCount <= changeSceneSecond)
         {
             fadeoutCount += Time.deltaTime;
-            audioSource.volume -= 1.0f / (changeSceneSecond / Time.deltaTime);
+            audioSource.volume -= bgmValume / (changeSceneSecond / Time.deltaTime);
             yield return null;
         }
     }
